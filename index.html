@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Task Manager</h1>
+  </header>
+
+  <section class="task-form">
+    <h2 id="form-title">Add Task</h2>
+    <form id="taskForm" enctype="multipart/form-data">
+      <div>
+        <label>Title</label>
+        <input type="text" name="title" required>
+      </div>
+      <div>
+        <label>Description</label>
+        <textarea name="description"></textarea>
+      </div>
+      <div>
+        <label>Due Date</label>
+        <input type="date" name="dueDate" id="dueDate" required>
+      </div>
+      <div>
+        <label>Attachment</label>
+        <input type="file" name="attachment">
+      </div>
+      <button type="submit">Add Task</button>
+      <button type="button" id="cancelEdit" style="display: none; margin-left: 10px;" onclick="cancelEdit()">Cancel</button>
+    </form>
+  </section>
+
+  <section class="tasks">
+    <div class="tasks-header">
+      <h2>Tasks</h2>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+      </div>
+    </div>
+    <div id="taskList" class="task-list"></div>
+  </section>
+
+  <script>
+    // Установка минимальной даты как сегодняшней
+    document.addEventListener('DOMContentLoaded', function() {
+      const dueDateInput = document.getElementById('dueDate');
+      const today = new Date().toISOString().split('T')[0];
+      dueDateInput.setAttribute('min', today);
+    });
+
+    // Функция отмены редактирования
+    function cancelEdit() {
+      document.getElementById('taskForm').reset();
+      editingTaskId = null;
+      document.querySelector('button[type="submit"]').textContent = 'Add Task';
+      document.getElementById('cancelEdit').style.display = 'none';
+      document.getElementById('form-title').textContent = 'Add Task';
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
